@@ -4,7 +4,7 @@ import { LineShadowText } from "@/components/magicui/line-shadow-text";
 import { PulsatingButton } from "@/components/magicui/pulsating-button";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import {SocialIcons} from "@/components/Icons/SocialTypeIcons";
-import {AnimationPic} from "@/components/SpecialAnimation/AnimationPic";
+import {AnimationPic} from "@/components/SpecialAnimation/AnimationPersonalPic.jsx";
 
 function ModernHeroSection() {
   return (
