@@ -1,35 +1,74 @@
-import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 
-// Use dynamic imports with ssr:false to prevent client components from executing during server-side rendering
-const CategoryGrid = dynamic(() => import("@/components/HomeNativeComponents/CategoryGrid"), { ssr: false });
-const NewsLetter = dynamic(() => import("@/components/NewsLetter/NewsLetter"), { ssr: false });
-const PricingSection = dynamic(() => import("@/components/PaymentsSection/PricingSection"), { ssr: false });
-const HeroSection = dynamic(() => import("@/components/HomeNativeComponents/HeroSection"), { ssr: false });
-const BlogLatestBlog = dynamic(() => import("@/components/Cards/BlogLatestBlog"), { ssr: false });
-const Features = dynamic(() => import("@/components/FeaturesSections/Features"), { ssr: false });
+// Create simple placeholder loading states
+function LoadingSection() {
+  return <div className="w-full h-72 animate-pulse bg-gray-100 dark:bg-gray-800"></div>;
+}
 
 export default function Home() {
   return (
     <div className="min-h-screen">
+      {/* Wrap each section in Suspense to defer hydration */}
+      <Suspense fallback={<LoadingSection />}>
+        {/* @ts-expect-error Async Server Component */}
+        <HeroSectionWrapper />
+      </Suspense>
 
-      {/* Hero Section */}
-      <HeroSection />
+      <Suspense fallback={<LoadingSection />}>
+        {/* @ts-expect-error Async Server Component */}
+        <PricingSectionWrapper />
+      </Suspense>
 
-      {/* Pricing Section */}
-      <PricingSection />
+      <Suspense fallback={<LoadingSection />}>
+        {/* @ts-expect-error Async Server Component */}
+        <BlogLatestBlogWrapper />
+      </Suspense>
 
-      {/* latest articles and blog post */}
-      <BlogLatestBlog />
+      <Suspense fallback={<LoadingSection />}>
+        {/* @ts-expect-error Async Server Component */}
+        <CategoryGridWrapper />
+      </Suspense>
 
-      {/* Category Section */}
-      <CategoryGrid />
+      <Suspense fallback={<LoadingSection />}>
+        {/* @ts-expect-error Async Server Component */}
+        <FeaturesWrapper />
+      </Suspense>
 
-      {/* Features Section */}
-      <Features/>
-
-      {/* news letter component  */}
-      <NewsLetter />
-      
+      <Suspense fallback={<LoadingSection />}>
+        {/* @ts-expect-error Async Server Component */}
+        <NewsLetterWrapper />
+      </Suspense>
     </div>
   );
+}
+
+// Create separate component wrapper files for each section
+async function HeroSectionWrapper() {
+  const HeroSection = (await import('@/components/HomeNativeComponents/HeroSection')).default;
+  return <HeroSection />;
+}
+
+async function PricingSectionWrapper() {
+  const PricingSection = (await import('@/components/PaymentsSection/PricingSection')).default;
+  return <PricingSection />;
+}
+
+async function BlogLatestBlogWrapper() {
+  const BlogLatestBlog = (await import('@/components/Cards/BlogLatestBlog')).default;
+  return <BlogLatestBlog />;
+}
+
+async function CategoryGridWrapper() {
+  const CategoryGrid = (await import('@/components/HomeNativeComponents/CategoryGrid')).default;
+  return <CategoryGrid />;
+}
+
+async function FeaturesWrapper() {
+  const Features = (await import('@/components/FeaturesSections/Features')).default;
+  return <Features />;
+}
+
+async function NewsLetterWrapper() {
+  const NewsLetter = (await import('@/components/NewsLetter/NewsLetter')).default;
+  return <NewsLetter />;
 }
