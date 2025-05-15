@@ -1,0 +1,38 @@
+export const blogPosts = [
+  {
+    id: 1,
+    title: "Getting Started with Next.js",
+    slug: "getting-started-nextjs",
+    excerpt: "Learn the basics of Next.js and how to create your first application.",
+    contentPath: "content/getting-started-nextjs.md", 
+    date: "May 10, 2025",
+    author: "Ali Raza",
+    imageUrl: "/star.jpg",
+    category: "React",
+    tags: ["next.js", "react", "javascript"],
+  },
+  {
+    id: 2,
+    title: "Mastering Tailwind CSS",
+    slug: "mastering-tailwind-css",
+    excerpt: "Explore advanced concepts in Tailwind CSS and boost your styling workflow.",
+    contentPath: "content/mastering-tailwind-css.md", 
+    date: "May 9, 2025",
+    author: "Ali Raza",
+    imageUrl: "/images/tailwind-cover.jpg",
+    category: "CSS",
+    tags: ["tailwind", "css", "responsive design"],
+  },
+  {
+    id: 3,
+    title: "Understanding JavaScript Closures",
+    slug: "understanding-javascript-closures",
+    excerpt: "Grasp how closures work in JavaScript with real-world examples.",
+    contentPath: "content/understanding-javascript-closures.md", 
+    date: "May 7, 2025",
+    author: "Ali Raza",
+    imageUrl: "/js-closures.jpg",
+    category: "JavaScript",
+    tags: ["javascript", "closures", "interview"],
+  }
+];
