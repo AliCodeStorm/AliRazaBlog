@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image'; // ✅ Importing Image
 import Sidebar from '@/components/Sidebar';
 import { Inter } from 'next/font/google';
 import { convertMarkdownToHtml } from '@/utils/markdown';
@@ -13,17 +14,19 @@ export default function BlogPostContent({ post, content }) {
 
   useEffect(() => {
     // Check for user's preferred color scheme
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setIsDarkMode(true);
     }
   }, []);
 
   useEffect(() => {
     // Update document class when dark mode changes
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    if (typeof document !== 'undefined') {
+      if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     }
   }, [isDarkMode]);
 
@@ -47,6 +50,7 @@ export default function BlogPostContent({ post, content }) {
             )}
           </button>
         </div>
+
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
           <main className="lg:w-2/3 bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
@@ -61,17 +65,23 @@ export default function BlogPostContent({ post, content }) {
                   {post.category}
                 </span>
               </div>
-              <div className="aspect-w-16 aspect-h-9 mb-8">
-                <img
+
+              {/* ✅ Replaced <img> with optimized <Image /> */}
+              <div className="relative w-full h-64 mb-8 rounded-lg overflow-hidden">
+                <Image
                   src={post.imageUrl}
                   alt={post.title}
-                  className="rounded-lg object-cover w-full h-64"
+                  fill
+                  className="object-cover"
+                  priority
                 />
               </div>
-              <div 
+
+              <div
                 className="markdown-content prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-code:text-sm prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded"
-                dangerouslySetInnerHTML={{ __html: htmlContent }} 
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
               />
+
               <div className="mt-8 flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
                   <span
@@ -93,4 +103,4 @@ export default function BlogPostContent({ post, content }) {
       </div>
     </div>
   );
-} 
+}
