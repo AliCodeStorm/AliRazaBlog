@@ -4,14 +4,11 @@ import React, { Fragment } from 'react'
 import ReactMarkdown from 'react-markdown'
 import CodeBox from './CodeBox'
 import Image from 'next/image'
+import { createTag } from '@/lib/tagUtils'
 
 const processMdContent = (content) => {
   return content
     .replace(/<div class="code-box">\s*<button class="copy-button" onclick="copyCode\(this\)">Copy<\/button>\s*(```[\s\S]*?```)\s*<\/div>/g, '$1')
-}
-
-const generateId = (text) => {
-  return text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
 }
 
 export default function MarkdownContent({ content }) {
@@ -22,15 +19,15 @@ export default function MarkdownContent({ content }) {
       <ReactMarkdown
         components={{
           h1: ({ node, children, ...props }) => {
-            const id = generateId(String(children))
+            const id = createTag(String(children))
             return <h1 id={id} className="text-4xl font-bold mt-8 mb-4 text-gray-900 dark:text-white" {...props}>{children}</h1>
           },
           h2: ({ node, children, ...props }) => {
-            const id = generateId(String(children))
+            const id = createTag(String(children))
             return <h2 id={id} className="text-3xl font-bold mt-8 mb-3 text-gray-800 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2" {...props}>{children}</h2>
           },
           h3: ({ node, children, ...props }) => {
-            const id = generateId(String(children))
+            const id = createTag(String(children))
             return <h3 id={id} className="text-2xl font-bold mt-6 mb-2 text-gray-800 dark:text-white" {...props}>{children}</h3>
           },
           code: ({ node, inline, className, children, ...props }) => {

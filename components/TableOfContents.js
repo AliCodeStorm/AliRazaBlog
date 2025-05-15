@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { createTag } from '@/lib/tagUtils'
 
 export default function TableOfContents({ content }) {
   const [headings, setHeadings] = useState([])
@@ -17,7 +18,7 @@ export default function TableOfContents({ content }) {
     const extractedHeadings = matches.map((match, index) => {
       const level = match[1].length 
       const text = match[2].trim()
-      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
+      const id = createTag(text)
       
       return {
         id,
@@ -30,6 +31,9 @@ export default function TableOfContents({ content }) {
   }, [content])
 
   useEffect(() => {
+    // Safety check for SSR - only run this effect in the browser
+    if (typeof window === 'undefined' || !document) return
+    
     const handleScroll = () => {
       if (headings.length === 0) return
       
@@ -61,6 +65,9 @@ export default function TableOfContents({ content }) {
   }, [headings, activeId])
   
   const scrollToHeading = (id) => {
+    // Safety check for SSR
+    if (typeof window === 'undefined' || !document) return
+    
     const element = document.getElementById(id)
     if (!element) return
     
