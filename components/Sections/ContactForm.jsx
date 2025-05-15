@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt, faClock, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faTwitter, faDribbble } from '@fortawesome/free-brands-svg-icons';
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/InputButton";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MagicCard } from "@/components/magicui/magic-card";
