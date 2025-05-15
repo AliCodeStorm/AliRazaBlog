@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt, faClock, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faTwitter, faDribbble } from '@fortawesome/free-brands-svg-icons';
-import { Input } from "../ui/Input";
+import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MagicCard } from "@/components/magicui/magic-card";
@@ -51,7 +51,7 @@ function ContactForm() {
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-8 lg:gap-12 items-stretch">
-                    
+
                     <motion.div
                         initial={{ x: -50, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
