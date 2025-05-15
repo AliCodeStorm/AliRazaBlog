@@ -1,6 +1,7 @@
 "use client"
 import Link from 'next/link';
 import { blogPosts } from '@/data/BlogPost';
+import Image from 'next/image';
 
 export default function Sidebar({ currentPost }) {
   const categories = [...new Set(blogPosts.map(post => post.category))];
@@ -45,7 +46,7 @@ export default function Sidebar({ currentPost }) {
             >
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 flex-shrink-0">
-                  <img
+                  <Image
                     src={post.imageUrl}
                     alt={post.title}
                     className="w-full h-full object-cover rounded"

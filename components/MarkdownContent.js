@@ -3,6 +3,7 @@
 import React, { Fragment } from 'react'
 import ReactMarkdown from 'react-markdown'
 import CodeBox from './CodeBox'
+import Image from 'next/image'
 
 const processMdContent = (content) => {
   return content
@@ -20,7 +21,6 @@ export default function MarkdownContent({ content }) {
     <div className="prose dark:prose-invert prose-lg max-w-none">
       <ReactMarkdown
         components={{
-          // Add IDs to headings for anchor links
           h1: ({ node, children, ...props }) => {
             const id = generateId(String(children))
             return <h1 id={id} className="text-4xl font-bold mt-8 mb-4 text-gray-900 dark:text-white" {...props}>{children}</h1>
@@ -53,16 +53,13 @@ export default function MarkdownContent({ content }) {
           },
           pre: ({ node, children, ...props }) => {
             const childArray = React.Children.toArray(children);
-
             if (childArray.length === 1 && React.isValidElement(childArray[0]) && childArray[0].type === CodeBox) {
               return childArray[0];
             }
-
             return <pre {...props}>{children}</pre>;
           },
           p: ({ node, children }) => {
             const childrenArray = React.Children.toArray(children);
-
             const hasCodeBox = childrenArray.some(child =>
               React.isValidElement(child) && child.type === CodeBox
             );
@@ -93,11 +90,25 @@ export default function MarkdownContent({ content }) {
           thead: ({ node, ...props }) => <thead className="bg-gray-100 dark:bg-gray-800" {...props} />,
           th: ({ node, ...props }) => <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider" {...props} />,
           td: ({ node, ...props }) => <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700" {...props} />,
-          img: ({ node, ...props }) => <img className="rounded-lg my-6 max-w-full h-auto" {...props} />
+
+          img: ({ node, ...props }) => {
+            const { src, alt } = props;
+            if (!src) return null;
+
+            return (
+              <Image
+                src={src}
+                alt={alt || 'Image'}
+                width={800}
+                height={500}
+                className="rounded-lg my-6 max-w-full h-auto"
+              />
+            );
+          }
         }}
       >
         {processedContent}
       </ReactMarkdown>
     </div>
   )
-} 
+}
