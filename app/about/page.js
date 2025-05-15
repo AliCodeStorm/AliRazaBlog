@@ -4,7 +4,7 @@ import { LineShadowText } from "@/components/magicui/line-shadow-text";
 import { PulsatingButton } from "@/components/magicui/pulsating-button";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import {SocialIcons} from "@/components/Icons/SocialTypeIcons";
-import {AnimationPic} from "@/components/SpecialAnimation/AnimationPersonalPic";
+import {AnimationPersonalPic} from "@/components/SpecialAnimation/AnimationPersonalPic";
 
 function ModernHeroSection() {
   return (
@@ -48,7 +48,7 @@ function ModernHeroSection() {
         </div>
         
         <div className="w-full md:w-1/2 z-10 order-1 md:order-2 flex justify-center md:justify-end mt-10 md:mt-0">
-          <AnimationPic className="relative md:absolute w-[250px] sm:w-[300px] md:w-[350px] lg:w-[400px] xl:w-[450px] top-0 md:top-1/2 md:-translate-y-1/2 right-0 md:right-10 lg:right-20 xl:right-40" />
+          <AnimationPersonalPic className="relative md:absolute w-[250px] sm:w-[300px] md:w-[350px] lg:w-[400px] xl:w-[450px] top-0 md:top-1/2 md:-translate-y-1/2 right-0 md:right-10 lg:right-20 xl:right-40" />
         </div>
 
       </div>
