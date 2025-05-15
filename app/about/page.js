@@ -3,8 +3,8 @@ import { MorphingText } from "@/components/magicui/morphing-text";
 import { LineShadowText } from "@/components/magicui/line-shadow-text";
 import { PulsatingButton } from "@/components/magicui/pulsating-button";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
-import {SocialIcons} from "@/components/Icons/SocialTypeIcons";
-import {AnimationPersonalPic} from "@/components/SpecialAnimation/AnimationPersonalPic";
+import SocialIcons from "@/components/Icons/SocialTypeIcons";
+import AnimationPersonalPic from "@/components/SpecialAnimation/AnimationPersonalPic";
 
 function ModernHeroSection() {
   return (
