@@ -1,10 +1,12 @@
-"use client"
-import CategoryGrid from "@/components/HomeNativeComponents/CategoryGrid";
-import NewsLetter from "@/components/NewsLetter/NewsLetter";
-import PricingSection from "@/components/PaymentsSection/PricingSection";
-import HeroSection from "@/components/HomeNativeComponents/HeroSection";
-import BlogLatestBlog from "@/components/Cards/BlogLatestBlog";
-import Features from "@/components/FeaturesSections/Features";
+import dynamic from 'next/dynamic';
+
+// Use dynamic imports with ssr:false to prevent client components from executing during server-side rendering
+const CategoryGrid = dynamic(() => import("@/components/HomeNativeComponents/CategoryGrid"), { ssr: false });
+const NewsLetter = dynamic(() => import("@/components/NewsLetter/NewsLetter"), { ssr: false });
+const PricingSection = dynamic(() => import("@/components/PaymentsSection/PricingSection"), { ssr: false });
+const HeroSection = dynamic(() => import("@/components/HomeNativeComponents/HeroSection"), { ssr: false });
+const BlogLatestBlog = dynamic(() => import("@/components/Cards/BlogLatestBlog"), { ssr: false });
+const Features = dynamic(() => import("@/components/FeaturesSections/Features"), { ssr: false });
 
 export default function Home() {
   return (
