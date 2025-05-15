@@ -10,7 +10,15 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function BlogPostContent({ post, content }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const htmlContent = convertMarkdownToHtml(content);
+
+  // 🟢 Changed: Move convertMarkdownToHtml call to client only (inside state + useEffect)
+  const [htmlContent, setHtmlContent] = useState('');
+
+  useEffect(() => {
+    // Convert markdown to HTML only on client side
+    const html = convertMarkdownToHtml(content);
+    setHtmlContent(html);
+  }, [content]);
 
   useEffect(() => {
     // Check for user's preferred color scheme
@@ -77,6 +85,7 @@ export default function BlogPostContent({ post, content }) {
                 />
               </div>
 
+              {/* 🟢 Changed: Use htmlContent from state */}
               <div
                 className="markdown-content prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-code:text-sm prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded"
                 dangerouslySetInnerHTML={{ __html: htmlContent }}
