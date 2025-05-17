@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image'; // ✅ Importing Image
+import Image from 'next/image'; 
 import Sidebar from '@/components/Sidebar';
 import { Inter } from 'next/font/google';
 import { convertMarkdownToHtml } from '@/utils/markdown';
