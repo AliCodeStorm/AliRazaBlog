@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }) {
-  const { slug } = params
+  const { slug } = await params
   
   try {
     // Read the markdown file

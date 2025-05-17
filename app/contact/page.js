@@ -14,8 +14,14 @@ export default function ContactSection() {
       </div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={
+            { opacity: 0,
+               y: 20 
+              }}
+          animate={{
+             opacity: 1,
+              y: 0
+             }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
@@ -24,14 +30,13 @@ export default function ContactSection() {
           </HyperText>
           <TextAnimate
             as="p"
-            className="text-lg text-gray-600 dark:text-gray-900"
+            className="text-lg text-gray-800 dark:text-gray-50"
             animation="fadeIn"
           >
             Have a question or want to work together?
           </TextAnimate>
         </motion.div>
 
-        {/* Contact Form or Call-to-Action */}
         <div className="text-center mt-8">
           <a
             href="mailto:wolfhunting49@gmail.com"
