@@ -1,4 +1,4 @@
-"use client"
+
 import CategoryGrid from "@/components/HomeNativeComponents/CategoryGrid";
 import NewsLetter from "@/components/NewsLetter/NewsLetter";
 import PricingSection from "@/components/PaymentsSection/PricingSection";
