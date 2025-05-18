@@ -1,21 +1,22 @@
+// utils/markdown.js
 import { marked } from 'marked';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github-dark.css'; // Or your preferred theme
 
 marked.setOptions({
-  gfm: true, 
-  breaks: true, 
-  headerIds: true, 
+  gfm: true,
+  breaks: true,
+  headerIds: true,
   mangle: false,
-  highlight: function(code, lang) {
-    if (lang && SyntaxHighlighter.languages[lang]) {
-      try {
-        return SyntaxHighlighter.highlight(code, { language: lang, style: vscDarkPlus }).value;
-      } catch (err) {
-        console.error('Error highlighting code:', err);
-      }
+  highlight: function (code, lang) {
+    try {
+      return lang && hljs.getLanguage(lang)
+        ? hljs.highlight(code, { language: lang }).value
+        : hljs.highlightAuto(code).value;
+    } catch (err) {
+      console.error('Highlighting error:', err);
+      return code;
     }
-    return code;
   }
 });
 
@@ -36,4 +37,4 @@ export function convertMarkdownToHtml(markdown) {
     .replace(/<blockquote/g, '<blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic my-4"');
 
   return enhancedHtml;
-} 
+}

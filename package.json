@@ -21,6 +21,7 @@
     "dompurify": "^3.2.5",
     "framer-motion": "^12.11.0",
     "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.509.0",
     "marked": "^15.0.11",
