@@ -1,6 +1,6 @@
-"use client";;
+"use client";
 import { motion, useMotionTemplate, useMotionValue } from "motion/react";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -16,6 +16,7 @@ export function MagicCard({
   const cardRef = useRef(null);
   const mouseX = useMotionValue(-gradientSize);
   const mouseY = useMotionValue(-gradientSize);
+  const [isMounted, setIsMounted] = useState(false);
 
   const handleMouseMove = useCallback((e) => {
     if (cardRef.current) {
@@ -29,34 +30,53 @@ export function MagicCard({
 
   const handleMouseOut = useCallback((e) => {
     if (!e.relatedTarget) {
-      document.removeEventListener("mousemove", handleMouseMove);
       mouseX.set(-gradientSize);
       mouseY.set(-gradientSize);
     }
-  }, [handleMouseMove, mouseX, gradientSize, mouseY]);
+  }, [mouseX, gradientSize, mouseY]);
 
   const handleMouseEnter = useCallback(() => {
-    document.addEventListener("mousemove", handleMouseMove);
     mouseX.set(-gradientSize);
     mouseY.set(-gradientSize);
-  }, [handleMouseMove, mouseX, gradientSize, mouseY]);
+  }, [mouseX, gradientSize, mouseY]);
 
+  // Handle mounting state
   useEffect(() => {
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseout", handleMouseOut);
-    document.addEventListener("mouseenter", handleMouseEnter);
+    setIsMounted(true);
+  }, []);
+
+  // Handle mouse events
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const card = cardRef.current;
+    if (!card) return;
+
+    card.addEventListener("mousemove", handleMouseMove);
+    card.addEventListener("mouseout", handleMouseOut);
+    card.addEventListener("mouseenter", handleMouseEnter);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseout", handleMouseOut);
-      document.removeEventListener("mouseenter", handleMouseEnter);
+      card.removeEventListener("mousemove", handleMouseMove);
+      card.removeEventListener("mouseout", handleMouseOut);
+      card.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, [handleMouseEnter, handleMouseMove, handleMouseOut]);
+  }, [isMounted, handleMouseEnter, handleMouseMove, handleMouseOut]);
 
   useEffect(() => {
+    if (!isMounted) return;
     mouseX.set(-gradientSize);
     mouseY.set(-gradientSize);
-  }, [gradientSize, mouseX, mouseY]);
+  }, [gradientSize, mouseX, mouseY, isMounted]);
+
+  if (!isMounted) {
+    return (
+      <div ref={cardRef} className={cn("group relative rounded-[inherit]", className)}>
+        <div className="absolute inset-px rounded-[inherit] bg-background" />
+        <div className="relative">{children}</div>
+      </div>
+    );
+  }
 
   return (
     <div

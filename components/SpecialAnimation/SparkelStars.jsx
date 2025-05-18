@@ -1,8 +1,16 @@
 "use client";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from 'react'
 
 const SparkleStars = () => {
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
+    if (!isMounted) return null
+
     return (
         <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-10">
             {[...Array(100)].map((_, i) => (

@@ -6,8 +6,15 @@ import { useRouter } from 'next/navigation'
 export default function TableOfContents({ content }) {
   const [headings, setHeadings] = useState([])
   const [activeId, setActiveId] = useState('')
+  const [isMounted, setIsMounted] = useState(false)
   const router = useRouter()
   
+  // Handle mounting state
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // Extract headings from content
   useEffect(() => {
     if (!content) return
     
@@ -29,10 +36,11 @@ export default function TableOfContents({ content }) {
     setHeadings(extractedHeadings)
   }, [content])
 
+  // Handle scroll events
   useEffect(() => {
+    if (!isMounted || headings.length === 0) return
+
     const handleScroll = () => {
-      if (headings.length === 0) return
-      
       const headingElements = headings.map(heading => 
         document.getElementById(heading.id)
       ).filter(Boolean)
@@ -58,9 +66,11 @@ export default function TableOfContents({ content }) {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [headings, activeId])
+  }, [headings, activeId, isMounted])
   
   const scrollToHeading = (id) => {
+    if (!isMounted) return
+
     const element = document.getElementById(id)
     if (!element) return
     
@@ -76,7 +86,7 @@ export default function TableOfContents({ content }) {
     setActiveId(id)
   }
   
-  if (headings.length === 0) return null
+  if (!isMounted || headings.length === 0) return null
   
   return (
     <nav className="toc mb-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">

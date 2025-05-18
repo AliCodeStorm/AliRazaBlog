@@ -1,20 +1,26 @@
 "use client"
 import ThemeToggle from '../Theme/ThemeToggle';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { House,
    LibraryBig,
-  ContactRound ,
+  ContactRound,
 Mail } from 'lucide-react';
 import { SparklesText } from "@/components/magicui/sparkles-text";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Handle body overflow when menu state changes
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = isOpen ? 'hidden' : 'unset';
+    }
+  }, [isOpen]);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    document.body.style.overflow = isOpen ? 'unset' : 'hidden';
   };
 
   return (

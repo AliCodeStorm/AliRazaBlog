@@ -5,8 +5,17 @@ const ThemeContext = createContext(undefined);
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('dark');
+  const [isMounted, setIsMounted] = useState(false);
 
+  // Handle mounting state
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Initialize theme
+  useEffect(() => {
+    if (!isMounted) return;
+
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       setTheme(savedTheme);
@@ -15,14 +24,25 @@ export function ThemeProvider({ children }) {
       setTheme('dark');
       document.documentElement.classList.add('dark');
     }
-  }, []);
+  }, [isMounted]);
 
   const toggleTheme = () => {
+    if (!isMounted) return;
+
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
     document.documentElement.classList.toggle('dark');
   };
+
+  // Prevent flash of wrong theme
+  if (!isMounted) {
+    return (
+      <ThemeContext.Provider value={{ theme: 'dark', toggleTheme }}>
+        {children}
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
